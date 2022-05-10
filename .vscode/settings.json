@@ -1,0 +1,6 @@
+{
+    "screencastMode.onlyKeyboardShortcuts": false,
+    "workbench.list.automaticKeyboardNavigation": false,
+    "screencastMode.keyboardShortcutsFormat": "commandAndKeys",
+    "editor.multiCursorModifier": "alt",
+}
