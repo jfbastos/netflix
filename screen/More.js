@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import Avatar from '../components/Avatar';
 import { View } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
+import { ProfileContext } from '../context/ProfileContext';
 
 const Screen = styled.View`
   flex: 1;
@@ -95,6 +96,7 @@ const More = (props) => {
   replaceAvatarsWithImage(props, profilesAvailables);
 
   return (
+    <ProfileContext.Consumer>{({user, setUser}) => 
     <Screen>
       <AvantarsContainer>
         <Row horizontal>
@@ -105,7 +107,10 @@ const More = (props) => {
                 image={item.icon}
                 uri={item.uri}
                 name={item.name}
-                onPress={(item) => selectProfile(props.navigation, item)}
+                onPress={() => {
+                  setUser(item)
+                  selectProfile(props.navigation, item)
+                }}
               />
             );
           })}
@@ -117,6 +122,7 @@ const More = (props) => {
         <ButtonLabel>Gerenciar perfis</ButtonLabel>
       </NetflixButton>
     </Screen>
+    }</ProfileContext.Consumer>
   );
 };
 

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, StatusBar } from 'react-native';
 import styled from 'styled-components/native';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import Movies from '../components/Movies';
+import { ProfileContext } from '../context/ProfileContext';
 import { filterByCountry, getGeolocation } from '../services/MovieFilter';
 
 
@@ -23,6 +24,13 @@ const Home = ({ navigation }) => {
   const [position, setPosition] = useState(null);
   const [nationalMovies, setNationalMoveis] = useState([]);
   const [internationalMovies, setInternacionalMovies] = useState([]);
+  const {user} = useContext(ProfileContext)
+  let resumedMovies = []
+
+  if (user && user.name) {
+    const moviesJson = require('../assets/movieToResume.json')
+    resumedMovies = moviesJson[user.name]
+  }
 
 
   useEffect(() => {
@@ -71,6 +79,7 @@ const Home = ({ navigation }) => {
           <Header navigation={navigation} />
           <Hero />
         </Poster>
+        {resumedMovies && resumedMovies.length > 0 && (<Movies label="Continuar assistindo" item={resumedMovies} />)}
         {nationalMovies && nationalMovies.length > 0 && (<Movies label="Nacionais" item={nationalMovies}/>)}       
         {internationalMovies && internationalMovies.length > 0 && (<Movies label="Recomendados" item={internationalMovies} />)}
         <Movies label="Top 10" item={api} />
