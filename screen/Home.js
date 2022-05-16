@@ -22,6 +22,7 @@ const Poster = styled.ImageBackground`
 const Home = ({ navigation }) => {
   const [position, setPosition] = useState(null);
   const [nationalMovies, setNationalMoveis] = useState([]);
+  const [internationalMovies, setInternacionalMovies] = useState([]);
 
 
   useEffect(() => {
@@ -46,14 +47,17 @@ const Home = ({ navigation }) => {
           filteredMovies = await filterByCountry(allMovies, position);
           setNationalMoveis(filteredMovies)
         }
-    }
 
-
+        
+        setInternacionalMovies(allMovies.filter((item, index) => {
+          return !filteredMovies.includes(item)
+        }))
+      }
     loadingNationalMovies();
   }, [position])
 
   //console.log('location', position)
-  console.log('nationalMovies', nationalMovies)
+  //console.log('nationalMovies', nationalMovies)
 
   return (
     <>
@@ -67,8 +71,9 @@ const Home = ({ navigation }) => {
           <Header navigation={navigation} />
           <Hero />
         </Poster>
-        <Movies label="Recomendados" item={nationalMovies} />
-        <Movies label="Top 10" item={nationalMovies} />
+        {nationalMovies && nationalMovies.length > 0 && (<Movies label="Nacionais" item={nationalMovies}/>)}       
+        {internationalMovies && internationalMovies.length > 0 && (<Movies label="Recomendados" item={internationalMovies} />)}
+        <Movies label="Top 10" item={api} />
       </Container>
     </>
   );

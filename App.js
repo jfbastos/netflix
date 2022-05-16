@@ -11,6 +11,7 @@ import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ProfileProvider } from './context/ProfileContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,6 +66,7 @@ function Tabs() {
 }
 
 const App = () => {
+
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
@@ -73,6 +75,7 @@ const App = () => {
     return unsubscribe;
   }, []);
   return (
+    <ProfileProvider>
     <NavigationContainer>
       <Stack.Navigator>
           <Stack.Screen name="Tab" component={Tabs} options={{headerShown: false}}/>  
@@ -80,6 +83,7 @@ const App = () => {
           <Stack.Screen name="ChooseIcon" component={ChooseIcon}/>
           <Stack.Screen name='Camera' component={Camera}/>
       </Stack.Navigator>
-    </NavigationContainer>);
+    </NavigationContainer>
+    </ProfileProvider>);
 };
 export default App;
