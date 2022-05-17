@@ -12,6 +12,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ProfileProvider } from './context/ProfileContext';
+import { getLanguage, setLanguage } from './languages/Utils';
+import { translate } from './languages/Utils';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,37 +30,37 @@ function Tabs() {
         component={Home} 
         options={{
           headerShown: false,
-          tabBarLabel: 'Home',
+          tabBarLabel: `${translate('home')}`,
           tabBarIcon: ({color, size}) => {
             return <Icon name="home" size={size} color={color} />;
           },
         }} />
       <Tab.Screen name="More" component={More}  
           options={{
-          tabBarLabel: 'More',
+          tabBarLabel: `${translate('more')}`,
           tabBarIcon: ({color, size}) => {
             return <Icon name="menu" size={size} color={color} />;
           },
         }} />
         <Tab.Screen name="Search" component={Home}  
           options={{
-          tabBarLabel: 'Search',
+          tabBarLabel: `${translate('search')}`,
           tabBarIcon: ({color, size}) => {
             return <Icon name="search-web" size={size} color={color} />;
           },
         }} />
         <Tab.Screen name="Soon" component={Home}  
           options={{
-          tabBarLabel: 'Soon',
+          tabBarLabel:  `${translate('soon')}`,
           tabBarIcon: ({color, size}) => {
             return <Icon name="timer-sand" size={size} color={color} />;
           },
         }} />
         <Tab.Screen name="Downloads" component={Home}  
           options={{
-          tabBarLabel: 'Download',
+          tabBarLabel: `${translate('downloads')}`,
           tabBarIcon: ({color, size}) => {
-            return <Icon name="download" size={size} color={color} />;
+            return <Icon name="download" size={size} color={color} />;S
           },
         }} />
     </Tab.Navigator>
@@ -66,6 +68,9 @@ function Tabs() {
 }
 
 const App = () => {
+
+  const language = getLanguage();
+  setLanguage(language);
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {

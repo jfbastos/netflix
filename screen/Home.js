@@ -6,6 +6,7 @@ import Hero from '../components/Hero';
 import Movies from '../components/Movies';
 import { ProfileContext } from '../context/ProfileContext';
 import { filterByCountry, getGeolocation } from '../services/MovieFilter';
+import { getLanguage } from '../languages/Utils';
 
 
 const api = require('../assets/movies.json')
@@ -26,6 +27,8 @@ const Home = ({ navigation }) => {
   const [internationalMovies, setInternacionalMovies] = useState([]);
   const {user} = useContext(ProfileContext)
   let resumedMovies = []
+
+  getLanguage();
 
   if (user && user.name) {
     const moviesJson = require('../assets/movieToResume.json')
